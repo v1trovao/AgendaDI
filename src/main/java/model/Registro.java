@@ -6,11 +6,20 @@ public class Registro {
     protected String titulo;
     protected String descricao;
     protected String data;
+    private TipoRegistro tipo;
+    private int id;
 
     public Registro(String titulo, String descricao, String data) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.data = data;
+    }
+
+    public Registro(int id, String titulo, String data, String descricao, TipoRegistro tipo) {
+        this(titulo, descricao, data);
+        this.id = id;
+        this.tipo = tipo;
+
     }
 
     public String getTitulo() {
@@ -35,5 +44,31 @@ public class Registro {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    public TipoRegistro getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoRegistro tipo) {
+        this.tipo = tipo;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "------------- \n" +
+                "ID " + id +
+                " - " + tipo
+                + ", " + titulo +
+                "  Data: " + data + '\n' +
+                "Descrição: \n" + " " + descricao + '\n';
     }
 }
