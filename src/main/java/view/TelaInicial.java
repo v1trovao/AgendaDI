@@ -29,10 +29,10 @@ public class TelaInicial {
                 adicionarRegistro();
                 break;
             case "2":
-                removerTarefa();
+                removerRegistro();
                 break;
             case "3":
-                editarTarefa();
+                editarRegistro();
                 break;
             case "4":
                 listarRegistros();
@@ -60,6 +60,8 @@ public class TelaInicial {
     }
 
     public void adicionarRegistro() {
+
+        // Tratamento de excecção para entradas diferentes
         System.out.println("Digite o tipo (TAREFA, EVENTO ou REUNIÃO");
         TipoRegistro tipo = TipoRegistro.valueOf(leitor.nextLine().toUpperCase());
         System.out.print("Titulo: ");
@@ -69,7 +71,7 @@ public class TelaInicial {
         System.out.print("Data: ");
         String data = leitor.nextLine();
 
-        int id = tarefas.size() + 1;
+        int id = registros.size() + 1;
         Registro novoRegistro = new Registro(id, titulo, data, descricao, tipo);
         registros.add(novoRegistro);
     }
@@ -99,9 +101,74 @@ public class TelaInicial {
     }
 
     public void removerRegistro() {
+        if (registros.isEmpty()) {
+            System.out.println("Nenhum registro cadastrado.");
+        }
+        else {
+            System.out.println("Remoção de Registro");
+            listarRegistros();
+            System.out.println("Digite o ID do registro que deseja remover");
+            System.out.println(registros.size());
+            int opcao = leitor.nextInt();
+            leitor.nextLine();
 
+            if (opcao > 0) {
+                // Considerar os casos
+                // - Remover um registro, e atualizar indíces dos demais registros
+
+                // Remover primeiro elemento da lista
+                if (opcao == 1) {
+                    registros.remove(0);
+                    for (Registro registro : registros) {
+                        registro.setId(registro.getId() - 1);
+                    }
+                }
+                // Remover elemento no meio da lista
+                else if (opcao <= registros.size()-1){
+
+                    registros.remove(opcao-1);
+
+                    // Fazendo a atualização dos índices a partir da posição do removido
+                    for (int i = opcao; i <= registros.size(); i++) {
+                        registros.get(i-1).setId(registros.get(i-1).getId() - 1);
+                    }
+                }
+
+                // Remover ultimo elemento da lista
+                else {
+                    registros.remove(registros.size()-1);
+                }
+
+                System.out.println("Registro removido com sucesso!");
+
+
+            } else {
+                System.out.println("Opção inválida");
+            }
+        }
     }
 
     public void editarTarefa() {
+    }
+
+    public void editarRegistro() {
+        if (registros.isEmpty()) {
+            System.out.println("Nenhum registro cadastrado.");
+        } else {
+            System.out.println("Selecione o registro que deseja editar");
+            listarRegistros();
+            int opcao = leitor.nextInt();
+            leitor.nextLine();
+            if (opcao > 0 && opcao <= registros.size()) {
+                Registro registro = registros.get(opcao-1);
+                System.out.print(registro.getTitulo());
+                String titulo = leitor.nextLine();
+                registro.setTitulo(titulo);
+
+                System.out.println("Registro editado com sucesso!");
+            } else {
+                System.out.println("Opção inválida");
+            }
+        }
     }
 }
