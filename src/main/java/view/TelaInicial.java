@@ -172,11 +172,31 @@ public class TelaInicial {
                 // Alterar múltiplos campos, mas deixando o usuario
                 // escolher qual alterar e qual manter
                 Registro registro = registros.get(opcao-1);
-                System.out.print(registro.getTitulo());
+                System.out.println("Titulo atual: " + registro.getTitulo());
+                System.out.println("Titulo novo (Digite '0' para manter esse campo): ");
                 String titulo = leitor.nextLine();
-                registro.setTitulo(titulo);
 
+                if (!titulo.equalsIgnoreCase("0")){
+                    registro.setTitulo(titulo);
+                }
+
+                System.out.println("Data atual: " + registro.getData());
+                System.out.println("Data novo (Digite '0' para manter esse campo): ");
+                String data = leitor.nextLine();
+
+                if (!data.equalsIgnoreCase("0")){
+                    registro.setData(data);
+                }
+
+                System.out.println("Descricao atual: " + registro.getDescricao());
+                System.out.println("Descricao novo (Digite '0' para manter sse campo): ");
+                String descricao = leitor.nextLine();
+
+                if (!descricao.equalsIgnoreCase("0")){
+                    registro.setDescricao(descricao);
+                }
                 System.out.println("Registro editado com sucesso!");
+
             } else {
                 System.out.println("Opção inválida");
             }
