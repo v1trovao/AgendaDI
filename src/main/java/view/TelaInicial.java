@@ -27,24 +27,26 @@ public class TelaInicial {
                 2 - Excluir Registro
                 3 - Editar Registro
                 4 - Listar Agenda""");
-        String opcao = leitor.nextLine();
+            String opcao = leitor.nextLine();
+            // Se possivel, tentar separar cada caso em uma view específica (ex.: JanelaAdicionarRegistro)
+            switch (opcao) {
+                case "1":
+                    adicionarRegistro();
+                    break;
+                case "2":
+                    removerRegistro();
+                    break;
+                case "3":
+                    editarRegistro();
+                    break;
+                case "4":
+                    listarRegistros(true);
+                    break;
 
-        // Se possivel, tentar separar cada caso em uma view específica (ex.: JanelaAdicionarRegistro)
-        switch (opcao) {
-            case "1":
-                adicionarRegistro();
-                break;
-            case "2":
-                removerRegistro();
-                break;
-            case "3":
-                editarRegistro();
-                break;
-            case "4":
-                listarRegistros();
-                break;
-
-        }
+                // Ver como funciona esse default
+                default:
+                    //throw new RuntimeException();
+            }
     }
 
     public void adicionarRegistro() {
@@ -67,13 +69,28 @@ public class TelaInicial {
         registros.add(novoRegistro);
     }
 
-    public void listarRegistros() {
+    public void listarRegistros(boolean completo) {
         if (registros.isEmpty()) {
             System.out.println("Nenhum registro cadastrado.");
+
         } else {
-            for (Registro registro : registros) {
-                System.out.println(registro);
+            // Registro completo
+            if (completo) {
+                for (Registro registro : registros) {
+                    System.out.println(registro);
+                }
             }
+            // Registro simplificado
+            else {
+                for (Registro registro : registros) {
+                    System.out.println("------------- \n" +
+                            "ID " + registro.getId() +
+                            " - " + registro.getTipo()
+                            + ", " + registro.getTitulo() +
+                            "  Data: " + registro.getData() + '\n');
+                }
+            }
+
         }
     }
 
@@ -85,7 +102,8 @@ public class TelaInicial {
         }
         else {
             System.out.println("Remoção de Registro");
-            listarRegistros();
+            // Ver o comentario em editarRegistro
+            listarRegistros(false);
             System.out.println("Digite o ID do registro que deseja remover");
             System.out.println(registros.size()); // Vai imprimir o tamanho da lista?
 
@@ -94,6 +112,12 @@ public class TelaInicial {
             int opcao = leitor.nextInt();
             leitor.nextLine();
 
+            // Considerar tbm quando a opção selecionada estiver fora do total de registros
+            // Tem só 3 registros, o usuário escolhe o 4?
+            // Tbm tem o caso quando só tem um elemento, ainda precisar verificar? Só remove
+            // automático?
+            // pula pro else ou faz uma condicional pra ver o tamanho antes de
+            // solicitar a opção do usuário
             if (opcao > 0) {
                 // Considerar os casos
                 // Remover um registro, e atualizar indíces dos demais registros
@@ -134,10 +158,16 @@ public class TelaInicial {
         if (registros.isEmpty()) {
             System.out.println("Nenhum registro cadastrado.");
         } else {
-            System.out.println("Selecione o registro que deseja editar");
-            listarRegistros();
+            // Deixar mais claro como selecionar o registro
+            System.out.println("Selecione o registro que deseja editar: ");
+            // Deixar a listagem mais sucinta, para esses casos
+            // Teria como formatar em tabela ou outra coisa? Banco ainda n tem
+            // Barra de busca tbm é uma opção
+            listarRegistros(false);
             int opcao = leitor.nextInt();
             leitor.nextLine();
+
+            // Deixar mais claro a tela de alterar registro
             if (opcao > 0 && opcao <= registros.size()) {
                 // Alterar múltiplos campos, mas deixando o usuario
                 // escolher qual alterar e qual manter
