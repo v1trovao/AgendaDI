@@ -18,6 +18,7 @@ public class AgendaDesktopApplication {
         while (continuar) {
             tela.exibirMenu();
 
+            // Mudar o teor da mensagem, adequada no contexto da agenda
             System.out.println("\nDeseja realizar outra consulta? ('SAIR' para encerrar)");
             String opcao = leitura.nextLine();
 
