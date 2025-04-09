@@ -9,6 +9,7 @@ public class Registro {
     private TipoRegistro tipo;
     private int id;
 
+    // Necessário dois construtores para o Registro?
     public Registro(String titulo, String descricao, String data) {
         this.titulo = titulo;
         this.descricao = descricao;
@@ -62,6 +63,7 @@ public class Registro {
         this.id = id;
     }
 
+    // Melhorar a formatacao do registro
     @Override
     public String toString() {
         return "------------- \n" +
